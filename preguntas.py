@@ -22,7 +22,9 @@ def pregunta_01():
     40
 
     """
-    return
+    df = tbl0
+    num_filas = len(df.index)
+    return(num_filas)
 
 
 def pregunta_02():
@@ -33,7 +35,9 @@ def pregunta_02():
     4
 
     """
-    return
+    df = tbl0
+    num_col = df.shape[1]
+    return(num_col)
 
 
 def pregunta_03():
@@ -50,7 +54,9 @@ def pregunta_03():
     Name: _c1, dtype: int64
 
     """
-    return
+    df = tbl0
+    counts = df['_c1'].value_counts().sort_index()
+    return(counts)
 
 
 def pregunta_04():
