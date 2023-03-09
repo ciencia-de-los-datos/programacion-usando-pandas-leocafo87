@@ -144,7 +144,9 @@ def pregunta_08():
     39   39   E    5  1998-01-26    44
 
     """
-    return
+    df = tbl0
+    df["suma"] = df["_c0"] + df["_c2"]
+    return(df)
 
 
 def pregunta_09():
@@ -162,7 +164,9 @@ def pregunta_09():
     39   39   E    5  1998-01-26  1998
 
     """
-    return
+    df=tbl0
+    df["year"] = df["_c3"].str[:4]
+    return(df)
 
 
 def pregunta_10():
@@ -179,7 +183,12 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
-    return
+    df=tbl0
+    df_r=df.sort_values(by=['_c1', '_c2'])
+    df_grouped = df_r.groupby("_c1")["_c2"].apply(lambda x: ":".join(x.astype(str))).reset_index()
+    result = df_grouped.rename(columns={"_c1": "_c0", "_c2": "_c1"})
+    print(result)
+    return(result)
 
 
 def pregunta_11():
