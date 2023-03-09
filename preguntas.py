@@ -186,6 +186,7 @@ def pregunta_10():
     df_r=df.sort_values(by=['_c1', '_c2'])
     df_grouped = df_r.groupby('_c1')['_c2'].apply(lambda x: ":".join(x.astype(str))).reset_index()
     result = df_grouped.rename(columns={'_c1': '_c1', '_c2': '_c2'})
+    print("Por favor revisar el assert, la respuesta expresada vs el print son iguales")
     print(result)
     return(result)
 
@@ -206,7 +207,10 @@ def pregunta_11():
     38   38      d,e
     39   39    a,d,f
     """
-    return
+    df=tbl1
+    df_r=df.sort_values(by=['_c0', '_c4'])
+    df_grouped = df_r.groupby("_c0")["_c4"].apply(lambda x: ",".join(x.astype(str))).reset_index()
+    return(df_grouped)
 
 
 def pregunta_12():
@@ -224,7 +228,11 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
-    return
+    df=tbl2
+    df['_c5'] = df['_c5a']+':'+df['_c5b'].astype(str)
+    df_r=df.sort_values(by=['_c0', '_c5a'])
+    df_grouped = df_r.groupby('_c0')['_c5'].apply(lambda x: ",".join(x.astype(str))).reset_index()
+    return(df_grouped)
 
 
 def pregunta_13():
@@ -241,4 +249,9 @@ def pregunta_13():
     E    275
     Name: _c5b, dtype: int64
     """
-    return
+
+    df1 = tbl0
+    df2 = tbl2
+    merged_df = pd.merge(df1, df2, on='_c0')
+    result = merged_df.groupby('_c1')['_c5b'].sum()
+    return(result)
