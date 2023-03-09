@@ -175,8 +175,7 @@ def pregunta_10():
     la columna _c2 para el archivo `tbl0.tsv`.
 
     Rta/
-                                   _c1
-      _c0
+    _c1                             _c0
     0   A              1:1:2:3:6:7:8:9
     1   B                1:3:4:5:6:8:9
     2   C                    0:5:6:7:9
@@ -186,7 +185,7 @@ def pregunta_10():
     df=tbl0
     df_r=df.sort_values(by=['_c1', '_c2'])
     df_grouped = df_r.groupby("_c1")["_c2"].apply(lambda x: ":".join(x.astype(str))).reset_index()
-    result = df_grouped.rename(columns={"_c1": "_c0", "_c2": "_c1"})
+    result = df_grouped.rename(columns={"_c1": "_c1", "_c2": "_c2"})
     print(result)
     return(result)
 
