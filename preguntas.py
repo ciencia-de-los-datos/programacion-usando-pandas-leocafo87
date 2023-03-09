@@ -184,8 +184,8 @@ def pregunta_10():
     """
     df=tbl0
     df_r=df.sort_values(by=['_c1', '_c2'])
-    df_grouped = df_r.groupby("_c1")["_c2"].apply(lambda x: ":".join(x.astype(str))).reset_index()
-    result = df_grouped.rename(columns={"_c1": "_c1", "_c2": "_c2"})
+    df_grouped = df_r.groupby('_c1')['_c2'].apply(lambda x: ":".join(x.astype(str))).reset_index()
+    result = df_grouped.rename(columns={'_c1': '_c1', '_c2': '_c2'})
     print(result)
     return(result)
 
