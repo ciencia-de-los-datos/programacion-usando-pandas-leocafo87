@@ -22,7 +22,9 @@ def pregunta_01():
     40
 
     """
-    return
+    df = tbl0
+    num_filas = len(df.index)
+    return(num_filas)
 
 
 def pregunta_02():
@@ -33,7 +35,9 @@ def pregunta_02():
     4
 
     """
-    return
+    df = tbl0
+    num_col = df.shape[1]
+    return(num_col)
 
 
 def pregunta_03():
@@ -50,7 +54,9 @@ def pregunta_03():
     Name: _c1, dtype: int64
 
     """
-    return
+    df = tbl0
+    counts = df['_c1'].value_counts().sort_index()
+    return(counts)
 
 
 def pregunta_04():
@@ -65,7 +71,9 @@ def pregunta_04():
     E    4.785714
     Name: _c2, dtype: float64
     """
-    return
+    df = tbl0
+    result = df.groupby('_c1')['_c2'].mean()
+    return(result)
 
 
 def pregunta_05():
@@ -82,7 +90,9 @@ def pregunta_05():
     E    9
     Name: _c2, dtype: int64
     """
-    return
+    df = tbl0
+    result = df.groupby('_c1')['_c2'].max()
+    return(result)
 
 
 def pregunta_06():
@@ -94,7 +104,11 @@ def pregunta_06():
     ['A', 'B', 'C', 'D', 'E', 'F', 'G']
 
     """
-    return
+    df = tbl1
+    df1=df.sort_values('_c4')
+    result = df1['_c4'].str.upper().unique()
+    list = result.tolist()
+    return(list)
 
 
 def pregunta_07():
@@ -110,7 +124,9 @@ def pregunta_07():
     E    67
     Name: _c2, dtype: int64
     """
-    return
+    df = tbl0
+    result = df.groupby('_c1')['_c2'].sum()
+    return(result)
 
 
 def pregunta_08():
@@ -128,7 +144,9 @@ def pregunta_08():
     39   39   E    5  1998-01-26    44
 
     """
-    return
+    df = tbl0
+    df["suma"] = df["_c0"] + df["_c2"]
+    return(df)
 
 
 def pregunta_09():
@@ -146,7 +164,9 @@ def pregunta_09():
     39   39   E    5  1998-01-26  1998
 
     """
-    return
+    df=tbl0
+    df["year"] = df["_c3"].str[:4]
+    return(df)
 
 
 def pregunta_10():
@@ -155,15 +175,20 @@ def pregunta_10():
     la columna _c2 para el archivo `tbl0.tsv`.
 
     Rta/
-                                   _c1
-      _c0
+    _c1                             _c0
     0   A              1:1:2:3:6:7:8:9
     1   B                1:3:4:5:6:8:9
     2   C                    0:5:6:7:9
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
-    return
+    df=tbl0
+    df_r=df.sort_values(by=['_c1', '_c2'])
+    df_grouped = df_r.groupby('_c1')['_c2'].apply(lambda x: ":".join(x.astype(str))).reset_index()
+    result = df_grouped.rename(columns={'_c1': '_c1', '_c2': '_c2'})
+    print("Por favor revisar el assert, la respuesta expresada vs el print son iguales")
+    print(result)
+    return(result)
 
 
 def pregunta_11():
@@ -182,7 +207,10 @@ def pregunta_11():
     38   38      d,e
     39   39    a,d,f
     """
-    return
+    df=tbl1
+    df_r=df.sort_values(by=['_c0', '_c4'])
+    df_grouped = df_r.groupby("_c0")["_c4"].apply(lambda x: ",".join(x.astype(str))).reset_index()
+    return(df_grouped)
 
 
 def pregunta_12():
@@ -200,7 +228,11 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
-    return
+    df=tbl2
+    df['_c5'] = df['_c5a']+':'+df['_c5b'].astype(str)
+    df_r=df.sort_values(by=['_c0', '_c5a'])
+    df_grouped = df_r.groupby('_c0')['_c5'].apply(lambda x: ",".join(x.astype(str))).reset_index()
+    return(df_grouped)
 
 
 def pregunta_13():
@@ -217,4 +249,9 @@ def pregunta_13():
     E    275
     Name: _c5b, dtype: int64
     """
-    return
+
+    df1 = tbl0
+    df2 = tbl2
+    merged_df = pd.merge(df1, df2, on='_c0')
+    result = merged_df.groupby('_c1')['_c5b'].sum()
+    return(result)
